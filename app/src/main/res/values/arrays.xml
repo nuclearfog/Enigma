@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="encr_algo">
+        <item>AES 256</item>
+    </string-array>
+
+    <string-array name="hash_algo">
+        <item>SHA256</item>
+    </string-array>
+
+</resources>

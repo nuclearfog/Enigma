@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CryptoLesson</string>
+    <string name="button_encrypt">encrypt!</string>
+    <string name="button_decrypt">decrypt!</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_input">Plain text</string>
+    <string name="hint_output">encrypted text</string>
+</resources>
