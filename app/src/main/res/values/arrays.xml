@@ -5,7 +5,10 @@
     </string-array>
 
     <string-array name="hash_algo">
-        <item>SHA256</item>
+        <item>SHA-512</item>
+        <item>SHA-384</item>
+        <item>SHA-256</item>
+        <item>SHA-1</item>
     </string-array>
 
 </resources>

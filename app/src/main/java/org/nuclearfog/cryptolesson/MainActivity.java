@@ -2,6 +2,7 @@ package org.nuclearfog.cryptolesson;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -9,13 +10,20 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.nuclearfog.cryptolesson.backend.CryptoTask;
+import org.nuclearfog.cryptolesson.backend.Callback;
+import org.nuclearfog.cryptolesson.backend.Decrypter;
+import org.nuclearfog.cryptolesson.backend.Encrypter;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Main activity of the app
+ *
+ * @author nuclearfog
+ */
+public class MainActivity extends AppCompatActivity implements OnClickListener, Callback {
 
-    private static final String[] CRYPTO = {CryptoTask.AES_256};
+    private static final String[] CRYPTO = {Encrypter.AES_256};
 
-    private static final String[] HASH = {CryptoTask.SHA_256};
+    private static final String[] HASH = {Encrypter.SHA_512, Encrypter.SHA_384, Encrypter.SHA_256, Encrypter.SHA_1};
 
     private EditText input, output, pass;
     private Spinner cryptSelector, hashSelector;
@@ -36,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
-
     }
+
 
     @Override
     public void onClick(View v) {
@@ -45,22 +53,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String hashAlgorithm = HASH[hashSelector.getSelectedItemPosition()];
 
         if (v.getId() == R.id.text_encrypt) {
-            CryptoTask task = new CryptoTask(this);
+            Encrypter task = new Encrypter(this);
             String text = input.getText().toString();
             String secret = pass.getText().toString();
-            task.execute(text, secret, CryptoTask.ENCRYPT, cryptoAlgorithm, hashAlgorithm);
+            task.execute(text, secret, cryptoAlgorithm, hashAlgorithm);
         }
         else if (v.getId() == R.id.text_decrypt) {
-            CryptoTask task = new CryptoTask(this);
+            Decrypter task = new Decrypter(this);
             String text = output.getText().toString();
             String secret = pass.getText().toString();
-            task.execute(text, secret, CryptoTask.DECRYPT, cryptoAlgorithm, hashAlgorithm);
+            task.execute(text, secret, cryptoAlgorithm, hashAlgorithm);
         }
     }
 
 
-    public void setText(String[] result) {
-        input.setText(result[0]);
-        output.setText(result[1]);
+    @Override
+    public void onEncrypted(String[] messages) {
+        output.setText(messages[0]);
+    }
+
+
+    @Override
+    public void onDecrypted(String message) {
+        input.setText(message);
     }
 }
