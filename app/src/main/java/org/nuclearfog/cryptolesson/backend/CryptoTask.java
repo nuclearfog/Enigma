@@ -2,8 +2,6 @@ package org.nuclearfog.cryptolesson.backend;
 
 import android.os.AsyncTask;
 
-import androidx.annotation.Nullable;
-
 import org.nuclearfog.cryptolesson.MainActivity;
 import org.nuclearfog.cryptolesson.backend.algorithm.AES;
 
@@ -15,7 +13,9 @@ public class CryptoTask extends AsyncTask<String, Void, String[]> {
     public static final String ENCRYPT = "encrypt";
     public static final String DECRYPT = "decrypt";
 
-    public static final String AES_256 = "AES-128";
+    public static final String AES_256 = "AES-256";
+
+    public static final String SHA_256 = "SHA-256";
 
 
     private WeakReference<MainActivity> callback;
@@ -26,27 +26,28 @@ public class CryptoTask extends AsyncTask<String, Void, String[]> {
         callback = new WeakReference<>(activity);
     }
 
-    @Nullable
+
     @Override
     protected String[] doInBackground(String[] param) {
         try {
-            String action = param[0];
-            String algorithm = param[1];
-            String message = param[2];
-            String pass = param[3];
+            String message = param[0];
+            String pass = param[1];
 
-            switch(algorithm) {
+            String action = param[2];
+            String encryption = param[3];
+            String hash = param[4];
+
+            switch(encryption) {
                 case AES_256:
                     if (ENCRYPT.equals(action)) {
-                        String encrypted = AES.encrypt(message, pass);
+                        String encrypted = AES.encrypt(message, pass, hash);
                         return new String[]{message, encrypted};
                     }
                     else if (DECRYPT.equals(action)) {
-                        String decrypted = AES.decrypt(message, pass);
+                        String decrypted = AES.decrypt(message, pass, hash);
                         return new String[] {decrypted, message};
                     }
                     break;
-
 
             }
         } catch (Exception err) {

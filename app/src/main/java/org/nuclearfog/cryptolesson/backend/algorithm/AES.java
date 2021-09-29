@@ -8,7 +8,6 @@ import org.nuclearfog.cryptolesson.backend.tools.StringTools;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -26,10 +25,10 @@ public class AES {
     private AES() {}
 
 
-    public static String encrypt(String text, String secret) {
+    public static String encrypt(String text, String secret, String hash) {
         try {
             Cipher cipher = Cipher.getInstance(CBC_PKCS5);
-            SecretKeySpec secretKey = buildKey(secret);
+            SecretKeySpec secretKey = buildKey(secret, hash);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, IV_SP);
             byte[] input = align(text.getBytes());
             byte[] output = cipher.doFinal(input);
@@ -40,11 +39,11 @@ public class AES {
     }
 
 
-    public static String decrypt(String text, String secret) {
+    public static String decrypt(String text, String secret, String hash) {
         try {
             Cipher cipher = Cipher.getInstance(CBC_PKCS5);
             byte[] input = align(Base64.decode(text, Base64.DEFAULT));
-            SecretKeySpec secretKey = buildKey(secret);
+            SecretKeySpec secretKey = buildKey(secret, hash);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, IV_SP);
             byte[] output = cipher.doFinal(input);
             output = StringTools.trimEnd(output);
@@ -55,10 +54,10 @@ public class AES {
     }
 
 
-    private static SecretKeySpec buildKey(String myKey) throws NoSuchAlgorithmException {
+    private static SecretKeySpec buildKey(String myKey, String hash) throws NoSuchAlgorithmException {
         byte[] key = myKey.getBytes();
-        MessageDigest hash = MessageDigest.getInstance("SHA-256");
-        key = hash.digest(key);
+        MessageDigest hashAlgo = MessageDigest.getInstance(hash);
+        key = hashAlgo.digest(key);
         return new SecretKeySpec(key, "AES");
     }
 }
