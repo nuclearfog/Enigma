@@ -21,13 +21,12 @@ import java.util.Arrays;
  */
 public abstract class SymmetricCryptography {
 
-    public static final String AES_256 = "AES-256";
+    public static final String AES_256 = "AES";
     public static final String BLOWFISH = "Blowfish";
     public static final String SERPENT = "Serpent";
-    public static final String CAMELLIA = "camellia";
-    public static final String KUZNYECHIK = "kuznyechik";
+    public static final String CAMELLIA = "Camellia";
+    public static final String KUZNYECHIK = "Kuznyechik";
     public static final String DES = "DES";
-
 
     public static final String SHA_1 = "SHA-1";
     public static final String SHA_256 = "SHA-256";

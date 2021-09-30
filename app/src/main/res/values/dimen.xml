@@ -3,8 +3,8 @@
     <dimen name="dropdown_height">40sp</dimen>
     <dimen name="view_item_margin">10dp</dimen>
     <dimen name="container_padding">10dp</dimen>
-    <dimen name="dropdown_item_padding">5dp</dimen>
-    <dimen name="dropdown_text_size">16sp</dimen>
+    <dimen name="dropdown_item_padding">8dp</dimen>
+    <dimen name="dropdown_text_size">18sp</dimen>
 
 
 </resources>

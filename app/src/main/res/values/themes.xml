@@ -6,13 +6,27 @@
         <item name="android:textColorSecondary">@color/text_color</item>
         <item name="android:textColorHint">@color/text_hint</item>
         <item name="spinnerDropDownItemStyle">@style/DropdownStyle</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
     <style name="DropdownStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:textColor">@color/dropdown_text_color</item>
+        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="SwitchStyle" parent="TextAppearance.AppCompat.Widget.Switch">
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:fontFamily">monospace</item>
     </style>
+
+    <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="titleTextStyle">@style/TitleTextStyle</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
 </resources>
