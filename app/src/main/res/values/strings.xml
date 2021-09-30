@@ -6,4 +6,6 @@
     <string name="hint_input">Plain text</string>
     <string name="hint_output">encrypted text</string>
     <string name="switch_hex_view">HEX mode</string>
+    <string name="licenses">Licenses</string>
+
 </resources>

@@ -11,6 +11,7 @@ android {
         targetSdk 30
         versionCode 1
         versionName "1.0"
+        resConfigs 'en'
     }
 
     buildTypes {
@@ -28,4 +29,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.56'
+    implementation 'com.larswerkman:LicenseView:1.1'
 }

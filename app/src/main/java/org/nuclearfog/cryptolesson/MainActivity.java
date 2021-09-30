@@ -3,7 +3,10 @@ package org.nuclearfog.cryptolesson;
 import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_B64;
 import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_HEX;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -13,6 +16,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,12 +33,13 @@ import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptograph
  */
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener, Callback {
 
-    private static final String[] CRYPTO = {AES_256, CAMELLIA, SERPENT, BLOWFISH, KUZNYECHIK, DES};
-    private static final String[] HASH = {SHA_512, SHA_384, SHA_256, SHA_1};
+    private static final String[] CRYPTO = {AES_256, IDEA, CAMELLIA, SERPENT, BLOWFISH, KUZNYECHIK, DES};
+    private static final String[] HASH = {SHA_512, SHA_256, WHIRLPOOL, TIGER, SHA_1};
 
     private EditText input, output, pass;
     private Spinner cryptSelector, hashSelector;
     private CompoundButton hexSwitch;
+    private Dialog licenseDialog;
 
     private String[] cryptOutput = {"", ""};
 
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         cryptSelector = findViewById(R.id.crypt_algo);
         hashSelector = findViewById(R.id.hash_algo);
         hexSwitch = findViewById(R.id.hex_switch);
+        licenseDialog = new LicenseDialog(this);
         cryptSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, CRYPTO));
         hashSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, HASH));
         Button encrypt = findViewById(R.id.text_encrypt);
@@ -58,6 +64,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
         hexSwitch.setOnCheckedChangeListener(this);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.main, m);
+
+        return super.onCreateOptionsMenu(m);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.license) {
+            if (!licenseDialog.isShowing()) {
+                licenseDialog.show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

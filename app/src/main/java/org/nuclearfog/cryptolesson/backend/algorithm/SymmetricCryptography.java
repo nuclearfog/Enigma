@@ -4,8 +4,9 @@ import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.ExtendedDigest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
-import org.bouncycastle.crypto.digests.SHA384Digest;
 import org.bouncycastle.crypto.digests.SHA512Digest;
+import org.bouncycastle.crypto.digests.TigerDigest;
+import org.bouncycastle.crypto.digests.WhirlpoolDigest;
 import org.bouncycastle.crypto.paddings.BlockCipherPadding;
 import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
@@ -27,11 +28,13 @@ public abstract class SymmetricCryptography {
     public static final String CAMELLIA = "Camellia";
     public static final String KUZNYECHIK = "Kuznyechik";
     public static final String DES = "DES";
+    public static final String IDEA = "IDEA";
 
     public static final String SHA_1 = "SHA-1";
     public static final String SHA_256 = "SHA-256";
-    public static final String SHA_384 = "SHA-384";
     public static final String SHA_512 = "SHA-512";
+    public static final String WHIRLPOOL = "Whirlpool";
+    public static final String TIGER = "Tiger";
 
     /**
      * encrypt byte array with AES-CBC
@@ -70,16 +73,20 @@ public abstract class SymmetricCryptography {
                 digest = new SHA256Digest();
                 break;
 
-            case SHA_384:
-                digest = new SHA384Digest();
-                break;
-
             case SHA_512:
                 digest = new SHA512Digest();
                 break;
 
             case SHA_1:
                 digest = new SHA1Digest();
+                break;
+
+            case WHIRLPOOL:
+                digest = new WhirlpoolDigest();
+                break;
+
+            case TIGER:
+                digest = new TigerDigest();
                 break;
         }
         digest.update(password.getBytes(), 0, password.length());

@@ -7,6 +7,7 @@ import org.nuclearfog.cryptolesson.backend.algorithm.AES;
 import org.nuclearfog.cryptolesson.backend.algorithm.Blowfish;
 import org.nuclearfog.cryptolesson.backend.algorithm.Camellia;
 import org.nuclearfog.cryptolesson.backend.algorithm.DES;
+import org.nuclearfog.cryptolesson.backend.algorithm.IDEA;
 import org.nuclearfog.cryptolesson.backend.algorithm.Kuznyechik;
 import org.nuclearfog.cryptolesson.backend.algorithm.Serpent;
 import org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography;
@@ -16,10 +17,21 @@ import java.lang.ref.WeakReference;
 
 import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography.*;
 
-
+/**
+ * Async Class to process encryption/decryption and string formatting
+ *
+ * @author nuclearfog
+ */
 public class Decrypter extends AsyncTask<String, Void, String> {
 
+    /**
+     * define input string as hex
+     */
     public static final String MODE_HEX = "hex-mode";
+
+    /**
+     * define input string as Base64
+     */
     public static final String MODE_B64 = "base64-mode";
 
     private WeakReference<Callback> callback;
@@ -40,32 +52,36 @@ public class Decrypter extends AsyncTask<String, Void, String> {
             String hash = param[3];
             String mode = param[4];
 
-            SymmetricCryptography crypto;
+            SymmetricCryptography cryptoEngine;
 
             switch(encryption) {
                 default:
                 case AES_256:
-                    crypto = new AES();
+                    cryptoEngine = new AES();
                     break;
 
                 case SERPENT:
-                    crypto = new Serpent();
+                    cryptoEngine = new Serpent();
                     break;
 
                 case BLOWFISH:
-                    crypto = new Blowfish();
+                    cryptoEngine = new Blowfish();
                     break;
 
                 case CAMELLIA:
-                    crypto = new Camellia();
+                    cryptoEngine = new Camellia();
                     break;
 
                 case KUZNYECHIK:
-                    crypto = new Kuznyechik();
+                    cryptoEngine = new Kuznyechik();
+                    break;
+
+                case IDEA:
+                    cryptoEngine = new IDEA();
                     break;
 
                 case DES:
-                    crypto = new DES();
+                    cryptoEngine = new DES();
                     break;
             }
             byte[] input = {};
@@ -73,7 +89,7 @@ public class Decrypter extends AsyncTask<String, Void, String> {
                 input = Converter.base64ToBytes(message);
             else if (MODE_HEX.equals(mode))
                 input = Converter.hexToBytes(message);
-            byte[] output = crypto.decrypt(input, pass, hash);
+            byte[] output = cryptoEngine.decrypt(input, pass, hash);
             return Converter.bytesToText(output);
 
         } catch(Exception err) {

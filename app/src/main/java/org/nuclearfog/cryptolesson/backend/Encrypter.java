@@ -7,6 +7,7 @@ import org.nuclearfog.cryptolesson.backend.algorithm.AES;
 import org.nuclearfog.cryptolesson.backend.algorithm.Blowfish;
 import org.nuclearfog.cryptolesson.backend.algorithm.Camellia;
 import org.nuclearfog.cryptolesson.backend.algorithm.DES;
+import org.nuclearfog.cryptolesson.backend.algorithm.IDEA;
 import org.nuclearfog.cryptolesson.backend.algorithm.Kuznyechik;
 import org.nuclearfog.cryptolesson.backend.algorithm.Serpent;
 import org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography;
@@ -16,7 +17,11 @@ import java.lang.ref.WeakReference;
 
 import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography.*;
 
-
+/**
+ * Async Class to process encryption/decryption and string formatting
+ *
+ * @author nuclearfog
+ */
 public class Encrypter extends AsyncTask<String, Void, String[]> {
 
     private WeakReference<Callback> callback;
@@ -36,36 +41,40 @@ public class Encrypter extends AsyncTask<String, Void, String[]> {
             String encryption = param[2];
             String hashAlgorithm = param[3];
 
-            SymmetricCryptography crypto;
+            SymmetricCryptography cryptoEngine;
 
             switch(encryption) {
                 default:
                 case AES_256:
-                    crypto = new AES();
+                    cryptoEngine = new AES();
                     break;
 
                 case SERPENT:
-                    crypto = new Serpent();
+                    cryptoEngine = new Serpent();
                     break;
 
                 case BLOWFISH:
-                    crypto = new Blowfish();
+                    cryptoEngine = new Blowfish();
                     break;
 
                 case CAMELLIA:
-                    crypto = new Camellia();
+                    cryptoEngine = new Camellia();
                     break;
 
                 case KUZNYECHIK:
-                    crypto = new Kuznyechik();
+                    cryptoEngine = new Kuznyechik();
+                    break;
+
+                case IDEA:
+                    cryptoEngine = new IDEA();
                     break;
 
                 case DES:
-                    crypto = new DES();
+                    cryptoEngine = new DES();
                     break;
             }
             byte[] input = Converter.textToBytes(message);
-            byte[] output = crypto.encrypt(input, password, hashAlgorithm);
+            byte[] output = cryptoEngine.encrypt(input, password, hashAlgorithm);
             String base64 = Converter.bytesToBase64(output);
             String hex = Converter.bytesToHex(output);
             return new String[]{base64, hex};
