@@ -64,8 +64,8 @@ public class Converter {
      */
     public static String bytesToBase64 (byte[] bytes) {
         // trim array to normal size
-        byte[] reduced = trimEnd(bytes);
-        return Base64.encodeToString(reduced, Base64.DEFAULT);
+        bytes = trimEnd(bytes);
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
     /**
@@ -86,5 +86,38 @@ public class Converter {
      */
     public static String bytesToText(byte[] bytes) {
         return new String(trimEnd(bytes));
+    }
+
+    /**
+     * convert text containing 2 hex digits to byte array
+     *
+     * @param text text with hex digits
+     * @return byte array
+     */
+    public static byte[] hexToBytes(String text) {
+       int len = text.length() / 3;
+       byte[] output = new byte[len];
+
+       for (int i = 0; i < len; i++) {
+           int pos = i * 3;
+           output[i] = (byte) (Character.digit(text.charAt(pos + 1), 16));
+           output[i] |= ((byte) (Character.digit(text.charAt(pos), 16))) << 4;
+       }
+       return output;
+    }
+
+    /**
+     * convert byte array to hex string
+     *
+     * @param input byte array
+     * @return string with hex values separated by  whitespace
+     */
+    public static String bytesToHex(byte[] input) {
+        StringBuilder result = new StringBuilder();
+        input = trimEnd(input);
+        for (byte hex : input) {
+            result.append(String.format("%02X ", hex));
+        }
+        return result.toString();
     }
 }

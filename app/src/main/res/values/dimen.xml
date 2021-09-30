@@ -2,6 +2,7 @@
 <resources>
     <dimen name="dropdown_height">40sp</dimen>
     <dimen name="view_item_margin">10dp</dimen>
+    <dimen name="container_padding">10dp</dimen>
 
 
 </resources>

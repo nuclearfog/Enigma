@@ -1,9 +1,14 @@
 package org.nuclearfog.cryptolesson;
 
+import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_B64;
+import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_HEX;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -19,14 +24,17 @@ import org.nuclearfog.cryptolesson.backend.Encrypter;
  *
  * @author nuclearfog
  */
-public class MainActivity extends AppCompatActivity implements OnClickListener, Callback {
+public class MainActivity extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener, Callback {
 
     private static final String[] CRYPTO = {Encrypter.AES_256, Encrypter.CAMELLIA};
-
     private static final String[] HASH = {Encrypter.SHA_512, Encrypter.SHA_384, Encrypter.SHA_256, Encrypter.SHA_1};
 
     private EditText input, output, pass;
     private Spinner cryptSelector, hashSelector;
+    private CompoundButton hexSwitch;
+
+    private String[] cryptOutput = {"", ""};
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         pass = findViewById(R.id.text_pass);
         cryptSelector = findViewById(R.id.crypt_algo);
         hashSelector = findViewById(R.id.hash_algo);
+        hexSwitch = findViewById(R.id.hex_switch);
 
         Button encrypt = findViewById(R.id.text_encrypt);
         Button decrypt = findViewById(R.id.text_decrypt);
 
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
+        hexSwitch.setOnCheckedChangeListener(this);
     }
 
 
@@ -62,14 +72,33 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             Decrypter task = new Decrypter(this);
             String text = output.getText().toString();
             String secret = pass.getText().toString();
-            task.execute(text, secret, cryptoAlgorithm, hashAlgorithm);
+            if (hexSwitch.isChecked()) {
+                task.execute(text, secret, cryptoAlgorithm, hashAlgorithm, MODE_HEX);
+            } else {
+                task.execute(text, secret, cryptoAlgorithm, hashAlgorithm, MODE_B64);
+            }
+        }
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked){
+            output.setText(cryptOutput[1]);
+        } else {
+            output.setText(cryptOutput[0]);
         }
     }
 
 
     @Override
     public void onEncrypted(String[] messages) {
-        output.setText(messages[0]);
+        cryptOutput = messages;
+        if (hexSwitch.isChecked()){
+            output.setText(messages[1]);
+        } else {
+            output.setText(messages[0]);
+        }
     }
 
 

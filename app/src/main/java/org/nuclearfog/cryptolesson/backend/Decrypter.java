@@ -13,6 +13,9 @@ import java.lang.ref.WeakReference;
 
 public class Decrypter extends AsyncTask<String, Void, String> implements Algorithms {
 
+    public static final String MODE_HEX = "hex-mode";
+    public static final String MODE_B64 = "base64-mode";
+
     private WeakReference<Callback> callback;
 
 
@@ -29,6 +32,7 @@ public class Decrypter extends AsyncTask<String, Void, String> implements Algori
             String pass = param[1];
             String encryption = param[2];
             String hash = param[3];
+            String mode = param[4];
 
             SymmetricCryptography crypto;
 
@@ -42,8 +46,11 @@ public class Decrypter extends AsyncTask<String, Void, String> implements Algori
                     crypto = new Camellia();
                     break;
             }
-
-            byte[] input = Converter.base64ToBytes(message);
+            byte[] input = {};
+            if (MODE_B64.equals(mode))
+                input = Converter.base64ToBytes(message);
+            else if (MODE_HEX.equals(mode))
+                input = Converter.hexToBytes(message);
             byte[] output = crypto.decrypt(input, pass, hash);
             return Converter.bytesToText(output);
 

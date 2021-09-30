@@ -9,6 +9,10 @@
     </style>
 
     <style name="DropdownStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/dropdown_text_color</item>
+    </style>
+
+    <style name="SwitchStyle" parent="TextAppearance.AppCompat.Widget.Switch">
         <item name="android:textColor">@color/text_color</item>
     </style>
 </resources>

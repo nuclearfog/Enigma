@@ -45,7 +45,8 @@ public class Encrypter extends AsyncTask<String, Void, String[]> implements Algo
             byte[] input = Converter.textToBytes(message);
             byte[] output = crypto.encrypt(input, password, hashAlgorithm);
             String base64 = Converter.bytesToBase64(output);
-            return new String[]{base64};
+            String hex = Converter.bytesToHex(output);
+            return new String[]{base64, hex};
 
         } catch (Exception err) {
             err.printStackTrace();

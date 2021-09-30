@@ -5,4 +5,6 @@
     <string name="hint_password">Password</string>
     <string name="hint_input">Plain text</string>
     <string name="hint_output">encrypted text</string>
+    <string name="switch_base64_view">Base64</string>
+    <string name="switch_hex_view">HEX</string>
 </resources>

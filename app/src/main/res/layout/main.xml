@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/container_padding">
 
     <EditText
         android:id="@+id/text_input"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/view_item_margin"
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:gravity="top|start"
@@ -20,6 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_item_margin"
         android:orientation="horizontal">
 
         <Spinner
@@ -56,6 +56,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_item_margin"
         android:orientation="horizontal">
 
         <Spinner
@@ -86,12 +87,20 @@
         android:id="@+id/text_output"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/view_item_margin"
+        android:layout_marginTop="@dimen/view_item_margin"
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:gravity="top|start"
         android:hint="@string/hint_output"
         android:importantForAutofill="no"
         android:inputType="textMultiLine|textNoSuggestions" />
+
+    <Switch
+        android:id="@+id/hex_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_item_margin"
+        android:textOff="@string/switch_base64_view"
+        android:textOn="@string/switch_hex_view" />
 
 </LinearLayout>
