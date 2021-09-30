@@ -2,6 +2,7 @@
 <resources>
     <string-array name="encr_algo">
         <item>AES 256</item>
+        <item>Camellia</item>
     </string-array>
 
     <string-array name="hash_algo">

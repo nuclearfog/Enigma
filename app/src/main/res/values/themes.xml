@@ -5,5 +5,10 @@
         <item name="android:textColorPrimary">@color/text_color</item>
         <item name="android:textColorSecondary">@color/text_color</item>
         <item name="android:textColorHint">@color/text_hint</item>
+        <item name="spinnerDropDownItemStyle">@style/DropdownStyle</item>
+    </style>
+
+    <style name="DropdownStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/text_color</item>
     </style>
 </resources>

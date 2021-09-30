@@ -21,7 +21,7 @@ import org.nuclearfog.cryptolesson.backend.Encrypter;
  */
 public class MainActivity extends AppCompatActivity implements OnClickListener, Callback {
 
-    private static final String[] CRYPTO = {Encrypter.AES_256};
+    private static final String[] CRYPTO = {Encrypter.AES_256, Encrypter.CAMELLIA};
 
     private static final String[] HASH = {Encrypter.SHA_512, Encrypter.SHA_384, Encrypter.SHA_256, Encrypter.SHA_1};
 

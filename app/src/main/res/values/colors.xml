@@ -2,5 +2,6 @@
 <resources>
     <color name="grey">#ff1f1f2f</color>
     <color name="text_color">#ff99ff44</color>
+    <color name="dropdown_text_color">#ffccff44</color>
     <color name="text_hint">#ff4f4f4f</color>
 </resources>

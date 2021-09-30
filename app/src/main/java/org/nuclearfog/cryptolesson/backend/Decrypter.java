@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 import org.nuclearfog.cryptolesson.MainActivity;
 import org.nuclearfog.cryptolesson.backend.algorithm.AES;
+import org.nuclearfog.cryptolesson.backend.algorithm.Camellia;
+import org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography;
 import org.nuclearfog.cryptolesson.backend.tools.Converter;
 
 import java.lang.ref.WeakReference;
@@ -28,14 +30,25 @@ public class Decrypter extends AsyncTask<String, Void, String> implements Algori
             String encryption = param[2];
             String hash = param[3];
 
-            switch(encryption) {
-                case AES_256:
-                    byte[] input = Converter.base64ToBytes(message);
-                    byte[] output = AES.decrypt(input, pass, hash);
-                    return Converter.bytesToText(output);
-            }
-        } catch(Exception err) {
+            SymmetricCryptography crypto;
 
+            switch(encryption) {
+                default:
+                case AES_256:
+                    crypto = new AES();
+                    break;
+
+                case CAMELLIA:
+                    crypto = new Camellia();
+                    break;
+            }
+
+            byte[] input = Converter.base64ToBytes(message);
+            byte[] output = crypto.decrypt(input, pass, hash);
+            return Converter.bytesToText(output);
+
+        } catch(Exception err) {
+            err.printStackTrace();
         }
         return "";
     }
