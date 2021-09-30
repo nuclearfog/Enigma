@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import org.nuclearfog.cryptolesson.MainActivity;
 import org.nuclearfog.cryptolesson.backend.algorithm.AES;
 import org.nuclearfog.cryptolesson.backend.algorithm.Camellia;
+import org.nuclearfog.cryptolesson.backend.algorithm.Kuznyechik;
 import org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography;
 import org.nuclearfog.cryptolesson.backend.tools.Converter;
 
@@ -44,6 +45,10 @@ public class Decrypter extends AsyncTask<String, Void, String> implements Algori
 
                 case CAMELLIA:
                     crypto = new Camellia();
+                    break;
+
+                case KUZNYECHIK:
+                    crypto = new Kuznyechik();
                     break;
             }
             byte[] input = {};

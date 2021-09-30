@@ -9,6 +9,7 @@ public interface Algorithms {
 
     String AES_256 = "AES-256";
     String CAMELLIA = "camellia";
+    String KUZNYECHIK = "kuznyechik";
 
 
     String SHA_1 = "SHA";

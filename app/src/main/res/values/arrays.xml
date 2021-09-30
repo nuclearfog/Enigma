@@ -3,6 +3,7 @@
     <string-array name="encr_algo">
         <item>AES 256</item>
         <item>Camellia</item>
+        <item>Kuznyechik</item>
     </string-array>
 
     <string-array name="hash_algo">
