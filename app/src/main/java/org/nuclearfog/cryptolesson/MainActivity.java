@@ -6,6 +6,7 @@ import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_HEX;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -19,6 +20,8 @@ import org.nuclearfog.cryptolesson.backend.Callback;
 import org.nuclearfog.cryptolesson.backend.Decrypter;
 import org.nuclearfog.cryptolesson.backend.Encrypter;
 
+import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography.*;
+
 /**
  * Main activity of the app
  *
@@ -26,8 +29,8 @@ import org.nuclearfog.cryptolesson.backend.Encrypter;
  */
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener, Callback {
 
-    private static final String[] CRYPTO = {Encrypter.AES_256, Encrypter.CAMELLIA, Encrypter.KUZNYECHIK};
-    private static final String[] HASH = {Encrypter.SHA_512, Encrypter.SHA_384, Encrypter.SHA_256, Encrypter.SHA_1};
+    private static final String[] CRYPTO = {AES_256, CAMELLIA, SERPENT, BLOWFISH, KUZNYECHIK, DES};
+    private static final String[] HASH = {SHA_512, SHA_384, SHA_256, SHA_1};
 
     private EditText input, output, pass;
     private Spinner cryptSelector, hashSelector;
@@ -47,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         cryptSelector = findViewById(R.id.crypt_algo);
         hashSelector = findViewById(R.id.hash_algo);
         hexSwitch = findViewById(R.id.hex_switch);
-
+        cryptSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, CRYPTO));
+        hashSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, HASH));
         Button encrypt = findViewById(R.id.text_encrypt);
         Button decrypt = findViewById(R.id.text_decrypt);
 

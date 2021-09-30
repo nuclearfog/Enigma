@@ -1,13 +1,16 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.BlockCipher;
+import org.bouncycastle.crypto.ExtendedDigest;
+import org.bouncycastle.crypto.digests.SHA1Digest;
+import org.bouncycastle.crypto.digests.SHA256Digest;
+import org.bouncycastle.crypto.digests.SHA384Digest;
+import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.crypto.paddings.BlockCipherPadding;
 import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 
@@ -17,6 +20,19 @@ import java.util.Arrays;
  * @author nuclearfog
  */
 public abstract class SymmetricCryptography {
+
+    public static final String AES_256 = "AES-256";
+    public static final String BLOWFISH = "Blowfish";
+    public static final String SERPENT = "Serpent";
+    public static final String CAMELLIA = "camellia";
+    public static final String KUZNYECHIK = "kuznyechik";
+    public static final String DES = "DES";
+
+
+    public static final String SHA_1 = "SHA-1";
+    public static final String SHA_256 = "SHA-256";
+    public static final String SHA_384 = "SHA-384";
+    public static final String SHA_512 = "SHA-512";
 
     /**
      * encrypt byte array with AES-CBC
@@ -46,16 +62,31 @@ public abstract class SymmetricCryptography {
      * @param password password string
      * @param hash hash algorithm name
      * @return secret key to encrypt or decrypt
-     * @throws NoSuchAlgorithmException if hash algorithm was not found
      */
-    protected byte[] buildKey(String password, String hash) throws NoSuchAlgorithmException {
-        byte[] key = password.getBytes();
-        MessageDigest hashAlgo = MessageDigest.getInstance(hash);
-        key = hashAlgo.digest(key);
-        // set key length to 256 bit
-        if (key.length != 32)
-            key = Arrays.copyOf(key, 32);
-        return key;
+    private byte[] buildKey(String password, String hash, int keysize) {
+        ExtendedDigest digest;
+        switch (hash) {
+            default:
+            case SHA_256:
+                digest = new SHA256Digest();
+                break;
+
+            case SHA_384:
+                digest = new SHA384Digest();
+                break;
+
+            case SHA_512:
+                digest = new SHA512Digest();
+                break;
+
+            case SHA_1:
+                digest = new SHA1Digest();
+                break;
+        }
+        digest.update(password.getBytes(), 0, password.length());
+        byte[] result = new byte[digest.getDigestSize()];
+        digest.doFinal(result, 0);
+        return Arrays.copyOf(result, keysize);
     }
 
     /**
@@ -63,15 +94,15 @@ public abstract class SymmetricCryptography {
      *
      * @param input     input byte array
      * @param password  password to encrypt/decrypt
-     * @param hash      hash algorithm name defined in {@link org.nuclearfog.cryptolesson.backend.Algorithms}
+     * @param hash      hash algorithm name
      * @param encrypt   true to encrypt, false to decrypt
      * @return encrypted/ decrypted byte array
      * @throws IOException if encryption or decryption fails
      */
-    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, BlockCipherPadding padding, boolean encrypt) throws IOException {
+    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, BlockCipherPadding padding, int keySize, boolean encrypt) throws IOException {
         try {
             PaddedBufferedBlockCipher blockCipher = new PaddedBufferedBlockCipher(cipher, padding);
-            byte[] key = buildKey(password, hash);
+            byte[] key = buildKey(password, hash, keySize);
             blockCipher.init(encrypt, new KeyParameter(key));
             byte[] output = new byte[blockCipher.getOutputSize(input.length)];
             int off = blockCipher.processBytes(input, 0, input.length, output, 0);

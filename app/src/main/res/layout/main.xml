@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/view_item_margin"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Spinner
@@ -30,8 +32,7 @@
             android:layout_marginLeft="@dimen/view_item_margin"
             android:layout_marginEnd="@dimen/view_item_margin"
             android:layout_marginRight="@dimen/view_item_margin"
-            android:layout_weight="1"
-            android:entries="@array/encr_algo" />
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/text_encrypt"
@@ -57,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/view_item_margin"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Spinner
@@ -66,13 +68,12 @@
             android:layout_marginStart="@dimen/view_item_margin"
             android:layout_marginLeft="@dimen/view_item_margin"
             android:layout_marginEnd="@dimen/view_item_margin"
-            android:layout_marginRight="@dimen/view_item_margin"
-            android:entries="@array/hash_algo" />
+            android:layout_marginRight="@dimen/view_item_margin" />
 
         <EditText
             android:id="@+id/text_pass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/view_item_margin"
             android:layout_marginRight="@dimen/view_item_margin"
             android:background="@android:color/transparent"
@@ -101,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/view_item_margin"
         android:textOff="@string/switch_base64_view"
-        android:textOn="@string/switch_hex_view" />
+        android:textOn="@string/switch_hex_view"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
 </LinearLayout>

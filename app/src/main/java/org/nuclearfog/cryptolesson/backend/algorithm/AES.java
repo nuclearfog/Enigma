@@ -14,13 +14,15 @@ import java.io.IOException;
  */
 public class AES extends SymmetricCryptography {
 
+    private static final int KEYSIZE = 32;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new AESEngine(), new PKCS7Padding(), true);
+            return encryptDecrypt(input, password, hash, new AESEngine(), new PKCS7Padding(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -32,7 +34,7 @@ public class AES extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new AESEngine(), new PKCS7Padding(), false);
+            return encryptDecrypt(input, password, hash, new AESEngine(), new PKCS7Padding(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }
