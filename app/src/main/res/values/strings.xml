@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crypto lesson</string>
+    <string name="app_name">Enigma</string>
     <string name="button_encrypt">encrypt!</string>
     <string name="button_decrypt">decrypt!</string>
     <string name="hint_password">Password</string>
@@ -7,5 +7,4 @@
     <string name="hint_output">encrypted text</string>
     <string name="switch_hex_view">HEX mode</string>
     <string name="licenses">Licenses</string>
-
 </resources>
