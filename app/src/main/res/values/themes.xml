@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.CryptoLesson" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.CryptoLesson" parent="Theme.AppCompat">
         <item name="android:background">@color/grey</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColorPrimary">@color/text_color</item>
