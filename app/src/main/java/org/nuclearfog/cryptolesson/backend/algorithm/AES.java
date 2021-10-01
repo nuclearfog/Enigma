@@ -14,6 +14,10 @@ import java.io.IOException;
  */
 public class AES extends SymmetricCryptography {
 
+    /**
+     * default keysize for AES-256 in bytes
+     * 16 bytes is also possible
+     */
     private static final int KEYSIZE = 32;
 
     /**

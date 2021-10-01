@@ -95,15 +95,13 @@ public class Converter {
      * @return byte array
      */
     public static byte[] hexToBytes(String text) {
-       int len = text.length() / 3;
-       byte[] output = new byte[len];
-
-       for (int i = 0; i < len; i++) {
-           int pos = i * 3;
-           output[i] = (byte) (Character.digit(text.charAt(pos + 1), 16));
-           output[i] |= ((byte) (Character.digit(text.charAt(pos), 16))) << 4;
-       }
-       return output;
+        String[] hexStr = text.split("[\\s:-]");
+        byte[] output = new byte[hexStr.length];
+        for (int i = 0 ; i < hexStr.length ; i++) {
+            output[i] = (byte) (Character.digit(hexStr[i].charAt(1), 16));
+            output[i] |= ((byte) (Character.digit(hexStr[i].charAt(0), 16)) << 4);
+        }
+        return output;
     }
 
     /**
@@ -118,6 +116,6 @@ public class Converter {
         for (byte hex : input) {
             result.append(String.format("%02X ", hex));
         }
-        return result.toString();
+        return result.deleteCharAt(result.length() - 1).toString();
     }
 }

@@ -1,19 +1,12 @@
 <resources>
-    <style name="Theme.CryptoLesson" parent="Theme.AppCompat.Light">
+    <style name="Theme.CryptoLesson" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:background">@color/grey</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColorPrimary">@color/text_color</item>
         <item name="android:textColorSecondary">@color/text_color</item>
         <item name="android:textColorHint">@color/text_hint</item>
-        <item name="spinnerDropDownItemStyle">@style/DropdownStyle</item>
-        <item name="android:fontFamily">monospace</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="actionMenuTextColor">@color/text_color</item>
-    </style>
-
-    <style name="DropdownStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
-        <item name="android:textColor">@color/dropdown_text_color</item>
-        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="SwitchStyle" parent="TextAppearance.AppCompat.Widget.Switch">

@@ -1,7 +1,6 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.BlowfishEngine;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 import org.bouncycastle.crypto.paddings.TBCPadding;
 
 import java.io.IOException;

@@ -5,6 +5,7 @@
     android:padding="@dimen/dropdown_item_padding"
     android:singleLine="true"
     android:textColor="@color/dropdown_text_color"
+    android:fontFamily="monospace"
     android:textSize="@dimen/dropdown_text_size">
 
 </TextView>

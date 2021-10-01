@@ -101,6 +101,7 @@ public abstract class SymmetricCryptography {
      * @param input     input byte array
      * @param password  password to encrypt/decrypt
      * @param hash      hash algorithm name
+     * @param keySize   length of the encryption/decryption key
      * @param encrypt   true to encrypt, false to decrypt
      * @return encrypted/ decrypted byte array
      * @throws IOException if encryption or decryption fails
