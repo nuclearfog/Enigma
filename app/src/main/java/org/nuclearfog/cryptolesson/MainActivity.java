@@ -33,8 +33,8 @@ import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptograph
  */
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener, Callback {
 
-    private static final String[] CRYPTO = {AES_256, IDEA, CAMELLIA, SERPENT, BLOWFISH, KUZNYECHIK, DES};
-    private static final String[] HASH = {SHA_512, SHA_256, WHIRLPOOL, TIGER, SHA_1};
+    private static final String[] CRYPTO = {AES_256, IDEA, CAMELLIA, SERPENT, BLOWFISH, TWOFISH, KUZNYECHIK, DES};
+    private static final String[] HASH = {SHA_512, SHA_256, WHIRLPOOL, TIGER, SHA_1, MD5};
 
     private EditText input, output, pass;
     private Spinner cryptSelector, hashSelector;

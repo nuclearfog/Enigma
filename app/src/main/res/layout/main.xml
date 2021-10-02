@@ -97,6 +97,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.SwitchCompat
@@ -104,14 +105,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="@dimen/view_item_margin"
             android:fontFamily="monospace"
             android:singleLine="true"
             android:thumbTextPadding="20dp" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_switch"
             android:layout_marginLeft="@dimen/margin_switch"
             android:layout_weight="1"

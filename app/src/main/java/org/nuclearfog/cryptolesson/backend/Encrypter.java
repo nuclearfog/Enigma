@@ -11,6 +11,7 @@ import org.nuclearfog.cryptolesson.backend.algorithm.IDEA;
 import org.nuclearfog.cryptolesson.backend.algorithm.Kuznyechik;
 import org.nuclearfog.cryptolesson.backend.algorithm.Serpent;
 import org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography;
+import org.nuclearfog.cryptolesson.backend.algorithm.Twofish;
 import org.nuclearfog.cryptolesson.backend.tools.Converter;
 
 import java.lang.ref.WeakReference;
@@ -71,6 +72,10 @@ public class Encrypter extends AsyncTask<String, Void, String[]> {
 
                 case DES:
                     cryptoEngine = new DES();
+                    break;
+
+                case TWOFISH:
+                    cryptoEngine = new Twofish();
                     break;
             }
             byte[] input = Converter.textToBytes(message);

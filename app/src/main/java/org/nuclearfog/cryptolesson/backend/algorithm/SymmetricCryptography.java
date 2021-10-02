@@ -2,6 +2,7 @@ package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.ExtendedDigest;
+import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.digests.SHA512Digest;
@@ -29,7 +30,9 @@ public abstract class SymmetricCryptography {
     public static final String KUZNYECHIK = "Kuznyechik";
     public static final String DES = "DES";
     public static final String IDEA = "IDEA";
+    public static final String TWOFISH = "Twofish";
 
+    public static final String MD5 = "MD5";
     public static final String SHA_1 = "SHA-1";
     public static final String SHA_256 = "SHA-256";
     public static final String SHA_512 = "SHA-512";
@@ -87,6 +90,10 @@ public abstract class SymmetricCryptography {
 
             case TIGER:
                 digest = new TigerDigest();
+                break;
+
+            case MD5:
+                digest = new MD5Digest();
                 break;
         }
         digest.update(password.getBytes(), 0, password.length());
