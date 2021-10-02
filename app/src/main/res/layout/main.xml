@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -15,7 +14,9 @@
         android:gravity="top|start"
         android:hint="@string/hint_input"
         android:importantForAutofill="no"
-        android:inputType="textMultiLine|textNoSuggestions" />
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             android:id="@+id/text_encrypt"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/view_item_margin"
             android:layout_marginRight="@dimen/view_item_margin"
             android:singleLine="true"
@@ -45,7 +46,7 @@
             android:id="@+id/text_decrypt"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:singleLine="true"
             android:text="@string/button_decrypt" />
 
@@ -60,15 +61,17 @@
 
         <Spinner
             android:id="@+id/hash_algo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="@dimen/dropdown_height"
             android:layout_marginEnd="@dimen/view_item_margin"
-            android:layout_marginRight="@dimen/view_item_margin" />
+            android:layout_marginRight="@dimen/view_item_margin"
+            android:layout_weight="2" />
 
         <EditText
             android:id="@+id/text_pass"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             android:background="@android:color/transparent"
             android:hint="@string/hint_password"
             android:importantForAutofill="no"
@@ -87,19 +90,33 @@
         android:gravity="top|start"
         android:hint="@string/hint_output"
         android:importantForAutofill="no"
-        android:inputType="textMultiLine|textNoSuggestions" />
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="vertical" />
 
-    <Switch
-        android:id="@+id/hex_switch"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/view_item_margin"
-        android:fontFamily="monospace"
-        android:singleLine="true"
-        android:text="@string/switch_hex_view"
-        android:textColor="@color/text_color"
-        android:thumbTextPadding="20dp"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/hex_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/view_item_margin"
+            android:fontFamily="monospace"
+            android:singleLine="true"
+            android:thumbTextPadding="20dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_switch"
+            android:layout_marginLeft="@dimen/margin_switch"
+            android:layout_weight="1"
+            android:text="@string/switch_hex_view"
+            android:textColor="@color/switch_text_color" />
+    </LinearLayout>
 
 </LinearLayout>

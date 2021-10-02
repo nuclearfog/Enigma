@@ -5,6 +5,7 @@
     <dimen name="container_padding">10dp</dimen>
     <dimen name="dropdown_item_padding">8dp</dimen>
     <dimen name="dropdown_text_size">18sp</dimen>
-
+    <dimen name="margin_switch">10dp</dimen>
+    <dimen name="license_text_size_small">9sp</dimen>
 
 </resources>
