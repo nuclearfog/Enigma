@@ -14,22 +14,9 @@ public class Converter {
     private Converter(){}
 
     /**
-     * aligns byte array to 128 bit blocksize and fills last bytes with '0'
-     *
-     * @param input input byte array
-     * @return aligned byte array
-     */
-    public static byte[] align(byte[] input) {
-        if (input.length % 16 == 0)
-            return input;
-        int addition = (16 - input.length % 16);
-        return Arrays.copyOf(input, input.length + addition);
-    }
-
-    /**
      * trim byte array to normal size
      *
-     * @param input aligned byte array
+     * @param input byte array
      * @return trimmed byte array
      */
     public static byte[] trimEnd(byte[] input) {
@@ -50,10 +37,7 @@ public class Converter {
      * @return decoded byte string
      */
     public static byte[] base64ToBytes(String base64) {
-        // decode Base64 to byte array
-        byte[] result = Base64.decode(base64, Base64.DEFAULT);
-        // expand last 16 byte (128 bit) to fit
-        return align(result);
+        return Base64.decode(base64, Base64.DEFAULT);
     }
 
     /**
@@ -63,8 +47,6 @@ public class Converter {
      * @return string with Base64 encoding
      */
     public static String bytesToBase64 (byte[] bytes) {
-        // trim array to normal size
-        bytes = trimEnd(bytes);
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
@@ -72,14 +54,15 @@ public class Converter {
      * convert cleartext to byte array
      *
      * @param text clear text string
-     * @return aligned byte array
+     * @return byte array of the cleartext
      */
     public static byte[] textToBytes(String text) {
-        return align(text.getBytes());
+        return text.getBytes();
     }
 
     /**
-     * convert (aligned) byte array to cleartext
+     * convert byte array to (trimmed) cleartext
+     *
      *
      * @param bytes byte array to convert
      * @return clear text string
@@ -95,6 +78,7 @@ public class Converter {
      * @return byte array
      */
     public static byte[] hexToBytes(String text) {
+        // split hex values from text
         String[] hexStr = text.split("[\\s:-]");
         byte[] output = new byte[hexStr.length];
         for (int i = 0 ; i < hexStr.length ; i++) {
@@ -112,7 +96,6 @@ public class Converter {
      */
     public static String bytesToHex(byte[] input) {
         StringBuilder result = new StringBuilder();
-        input = trimEnd(input);
         for (byte hex : input) {
             result.append(String.format("%02X ", hex));
         }

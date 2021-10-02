@@ -1,7 +1,7 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.BlowfishEngine;
-import org.bouncycastle.crypto.paddings.TBCPadding;
+import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class Blowfish extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new BlowfishEngine(), new TBCPadding(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new BlowfishEngine(), new PKCS7Padding(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -35,7 +35,7 @@ public class Blowfish extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new BlowfishEngine(), new TBCPadding(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new BlowfishEngine(), new PKCS7Padding(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }
