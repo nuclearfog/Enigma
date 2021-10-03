@@ -1,7 +1,7 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.DESEngine;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
+import org.bouncycastle.crypto.modes.CBCBlockCipher;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class DES extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new DESEngine(), new PKCS7Padding(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new DESEngine(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -36,7 +36,7 @@ public class DES extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new DESEngine(), new PKCS7Padding(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new DESEngine(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

@@ -1,7 +1,6 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.IDEAEngine;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 import java.io.IOException;
 
@@ -13,13 +12,16 @@ import java.io.IOException;
  */
 public class IDEA extends SymmetricCryptography {
 
+    /**
+     * key size for IDEA encryption
+     */
     private static final int KEYSIZE = 16;
 
 
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new IDEAEngine(), new PKCS7Padding(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new IDEAEngine(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -29,7 +31,7 @@ public class IDEA extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new IDEAEngine(), new PKCS7Padding(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new IDEAEngine(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

@@ -1,16 +1,21 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.BlockCipher;
+import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.ExtendedDigest;
+import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.crypto.digests.TigerDigest;
 import org.bouncycastle.crypto.digests.WhirlpoolDigest;
+import org.bouncycastle.crypto.modes.CBCBlockCipher;
 import org.bouncycastle.crypto.paddings.BlockCipherPadding;
+import org.bouncycastle.crypto.paddings.PKCS7Padding;
 import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.crypto.params.ParametersWithIV;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -111,19 +116,24 @@ public abstract class SymmetricCryptography {
      * @param keySize   length of the encryption/decryption key
      * @param encrypt   true to encrypt, false to decrypt
      * @return encrypted/ decrypted byte array
-     * @throws IOException if encryption or decryption fails
      */
-    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, BlockCipherPadding padding, int keySize, boolean encrypt) throws IOException {
-        try {
-            PaddedBufferedBlockCipher blockCipher = new PaddedBufferedBlockCipher(cipher, padding);
-            byte[] key = buildKey(password, hash, keySize);
-            blockCipher.init(encrypt, new KeyParameter(key));
-            byte[] output = new byte[blockCipher.getOutputSize(input.length)];
-            int off = blockCipher.processBytes(input, 0, input.length, output, 0);
-            blockCipher.doFinal(output, off);
-            return output;
-        } catch (Exception e) {
-            throw new IOException(e);
-        }
+    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, int keySize, boolean encrypt) throws InvalidCipherTextException {
+        CBCBlockCipher cbcCipher = new CBCBlockCipher(cipher);
+        // create key and initial vector from password with defined hash algorithm
+        byte[] key = buildKey(password, hash, keySize);
+        byte[] iv = Arrays.copyOf(key, cbcCipher.getBlockSize());
+        // init cipher
+        KeyParameter keyParam = new KeyParameter(key);
+        BlockCipherPadding padding = new PKCS7Padding();
+        BufferedBlockCipher blockCipher = new PaddedBufferedBlockCipher(cbcCipher, padding);
+        // init block cipher with CBC
+        ParametersWithIV keyPAramIV = new ParametersWithIV(keyParam, iv);
+        blockCipher.init(encrypt, keyPAramIV);
+        // prepare output byte array
+        byte[] output = new byte[blockCipher.getOutputSize(input.length)];
+        // encrypt/decrypt!
+        int off = blockCipher.processBytes(input, 0, input.length, output, 0);
+        blockCipher.doFinal(output, off);
+        return output;
     }
 }

@@ -1,7 +1,6 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.CamelliaEngine;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 import java.io.IOException;
 
@@ -13,6 +12,9 @@ import java.io.IOException;
  */
 public class Camellia extends SymmetricCryptography {
 
+    /**
+     * key size for Camellia
+     */
     private static final int KEYSIZE = 32;
 
     /**
@@ -21,7 +23,7 @@ public class Camellia extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new CamelliaEngine(), new PKCS7Padding(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -33,7 +35,7 @@ public class Camellia extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new CamelliaEngine(), new PKCS7Padding(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

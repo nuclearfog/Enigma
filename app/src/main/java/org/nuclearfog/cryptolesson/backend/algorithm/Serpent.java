@@ -1,7 +1,6 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.SerpentEngine;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 import java.io.IOException;
 
@@ -13,7 +12,7 @@ import java.io.IOException;
 public class Serpent extends SymmetricCryptography {
 
     /**
-     * KKey size used for Serpent
+     * Key size used for Serpent
      */
     private static final int KEYSIZE = 32;
 
@@ -23,7 +22,7 @@ public class Serpent extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new SerpentEngine(), new PKCS7Padding(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new SerpentEngine(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -35,7 +34,7 @@ public class Serpent extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new SerpentEngine(), new PKCS7Padding(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new SerpentEngine(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

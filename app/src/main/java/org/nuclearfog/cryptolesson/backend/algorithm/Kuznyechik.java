@@ -1,7 +1,6 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.GOST28147Engine;
-import org.bouncycastle.crypto.paddings.PKCS7Padding;
 
 import java.io.IOException;
 
@@ -12,6 +11,9 @@ import java.io.IOException;
  */
 public class Kuznyechik extends SymmetricCryptography {
 
+    /**
+     * key size for Kuznyechik
+     */
     private static final int KEYSIZE = 32;
 
     /**
@@ -20,7 +22,7 @@ public class Kuznyechik extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new GOST28147Engine(), new PKCS7Padding(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new GOST28147Engine(), KEYSIZE, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -32,7 +34,7 @@ public class Kuznyechik extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new GOST28147Engine(), new PKCS7Padding(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new GOST28147Engine(), KEYSIZE, false);
         } catch (Exception e) {
             throw new IOException(e);
         }
