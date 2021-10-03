@@ -28,27 +28,25 @@
             android:id="@+id/crypt_algo"
             android:layout_width="0dp"
             android:layout_height="@dimen/dropdown_height"
-            android:layout_marginEnd="@dimen/view_item_margin"
-            android:layout_marginRight="@dimen/view_item_margin"
-            android:layout_weight="1" />
+            android:layout_weight="3" />
 
-        <Button
+        <ImageButton
             android:id="@+id/text_encrypt"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/view_item_margin"
-            android:layout_marginRight="@dimen/view_item_margin"
-            android:singleLine="true"
-            android:text="@string/button_encrypt" />
+            android:layout_weight="1"
+            android:contentDescription="@string/button_encrypt"
+            android:src="@drawable/encrypt" />
 
-        <Button
+        <ImageButton
             android:id="@+id/text_decrypt"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:singleLine="true"
-            android:text="@string/button_decrypt" />
+            android:layout_weight="1"
+            android:contentDescription="@string/button_decrypt"
+            android:src="@drawable/decrypt" />
 
     </LinearLayout>
 
@@ -65,14 +63,17 @@
             android:layout_height="@dimen/dropdown_height"
             android:layout_marginEnd="@dimen/view_item_margin"
             android:layout_marginRight="@dimen/view_item_margin"
-            android:layout_weight="2" />
+            android:layout_weight="1" />
 
         <EditText
             android:id="@+id/text_pass"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:drawableStart="@drawable/password"
+            android:drawableLeft="@drawable/password"
+            android:drawablePadding="@dimen/password_icon_padding"
             android:hint="@string/hint_password"
             android:importantForAutofill="no"
             android:inputType="textNoSuggestions"

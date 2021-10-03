@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -58,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         licenseDialog = new LicenseDialog(this);
         cryptSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, CRYPTO));
         hashSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, HASH));
-        Button encrypt = findViewById(R.id.text_encrypt);
-        Button decrypt = findViewById(R.id.text_decrypt);
+        View encrypt = findViewById(R.id.text_encrypt);
+        View decrypt = findViewById(R.id.text_decrypt);
 
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
@@ -114,8 +113,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked){
             output.setText(cryptOutput[1]);
+            output.setVerticalScrollBarEnabled(true);
         } else {
             output.setText(cryptOutput[0]);
+            output.setVerticalScrollBarEnabled(false);
         }
     }
 

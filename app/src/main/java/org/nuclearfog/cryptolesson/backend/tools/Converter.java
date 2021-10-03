@@ -79,7 +79,7 @@ public class Converter {
      */
     public static byte[] hexToBytes(String text) {
         // split hex values from text
-        String[] hexStr = text.split("[\\s:-]");
+        String[] hexStr = text.split("[\\s:-]\n?");
         byte[] output = new byte[hexStr.length];
         for (int i = 0 ; i < hexStr.length ; i++) {
             output[i] = (byte) (Character.digit(hexStr[i].charAt(1), 16));
@@ -96,8 +96,11 @@ public class Converter {
      */
     public static String bytesToHex(byte[] input) {
         StringBuilder result = new StringBuilder();
-        for (byte hex : input) {
-            result.append(String.format("%02X ", hex));
+        for (int i = 0 ; i < input.length ; i++) {
+            if (i % 8 == 0 && i > 0) {
+                result.append('\n');
+            }
+            result.append(String.format("%02X ", input[i]));
         }
         return result.deleteCharAt(result.length() - 1).toString();
     }
