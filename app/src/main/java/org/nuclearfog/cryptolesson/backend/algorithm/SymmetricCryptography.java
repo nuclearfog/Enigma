@@ -1,7 +1,8 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
+import androidx.annotation.Nullable;
+
 import org.bouncycastle.crypto.BlockCipher;
-import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.digests.MD5Digest;
@@ -11,7 +12,6 @@ import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.crypto.digests.TigerDigest;
 import org.bouncycastle.crypto.digests.WhirlpoolDigest;
 import org.bouncycastle.crypto.modes.CBCBlockCipher;
-import org.bouncycastle.crypto.paddings.BlockCipherPadding;
 import org.bouncycastle.crypto.paddings.PKCS7Padding;
 import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
@@ -48,23 +48,25 @@ public abstract class SymmetricCryptography {
      * encrypt byte array with AES-CBC
      *
      * @param input     input byte array (clear, must be aligned)
+     * @param iv        initial vector if defined
      * @param password  password string
      * @param hash      hash algorithm name as string
      * @return encrypted byte array
      * @throws IOException if encryption fails
      */
-    public abstract byte[] encrypt(byte[] input, String password, String hash) throws IOException;
+    public abstract byte[] encrypt(byte[] input, @Nullable byte[] iv, String password, String hash) throws IOException;
 
     /**
      * decrypt byte array with AES-CBC
      *
      * @param input     input byte array (encrypted, must be aligned)
+     * @param iv        initial vector if defined
      * @param password  password string
      * @param hash      hash algorithm name as string
      * @return decrypted byte array
      * @throws IOException if encryption fails
      */
-    public abstract byte[] decrypt(byte[] input, String password, String hash) throws IOException;
+    public abstract byte[] decrypt(byte[] input, @Nullable byte[] iv, String password, String hash) throws IOException;
 
     /**
      * create encryption key from password. A hash code of the password will be used.
@@ -123,20 +125,28 @@ public abstract class SymmetricCryptography {
      *
      * @param input     input byte array
      * @param password  password to encrypt/decrypt
+     * @param iv        optional initial vector
      * @param hash      hash algorithm name
      * @param keySizes  key sizes of the encryption algorithm in descending order
      * @param encrypt   true to encrypt, false to decrypt
      * @return encrypted/decrypted byte array
      */
-    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, int[] keySizes, boolean encrypt) throws InvalidCipherTextException {
+    protected byte[] encryptDecrypt(byte[] input, @Nullable byte[] iv, String password, String hash, BlockCipher cipher, int[] keySizes, boolean encrypt) throws InvalidCipherTextException {
         CBCBlockCipher cbcCipher = new CBCBlockCipher(cipher);
-        // create key and initial vector from password with defined hash algorithm
+        // create key from password with defined hash algorithm
         byte[] key = buildKey(password, hash, keySizes);
-        byte[] iv = buildKey(password, hash, cbcCipher.getBlockSize());
+        // setup initial vector
+        if (iv != null) {
+            // resize IV to cipher block size
+            iv = Arrays.copyOf(iv, cbcCipher.getBlockSize());
+        } else {
+            // use key as IV
+            iv = Arrays.copyOf(key, cbcCipher.getBlockSize());
+        }
         // init cipher
         KeyParameter keyParam = new KeyParameter(key);
-        BlockCipherPadding padding = new PKCS7Padding();
-        BufferedBlockCipher blockCipher = new PaddedBufferedBlockCipher(cbcCipher, padding);
+        PKCS7Padding padding = new PKCS7Padding();
+        PaddedBufferedBlockCipher blockCipher = new PaddedBufferedBlockCipher(cbcCipher, padding);
         // init block cipher with CBC
         ParametersWithIV keyPAramIV = new ParametersWithIV(keyParam, iv);
         blockCipher.init(encrypt, keyPAramIV);

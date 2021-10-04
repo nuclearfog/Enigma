@@ -49,13 +49,14 @@ public class Decrypter extends AsyncTask<String, Void, String> {
         try {
             String message = param[0];
             String pass = param[1];
-            String encryption = param[2];
-            String hash = param[3];
-            String mode = param[4];
+            String initVec = param[2];
+            String algo = param[3];
+            String hash = param[4];
+            String mode = param[5];
 
             SymmetricCryptography cryptoEngine;
 
-            switch(encryption) {
+            switch(algo) {
                 default:
                     return "";
 
@@ -91,12 +92,15 @@ public class Decrypter extends AsyncTask<String, Void, String> {
                     cryptoEngine = new Twofish();
                     break;
             }
+            byte[] iv = null;
             byte[] input = {};
             if (MODE_B64.equals(mode))
                 input = Converter.base64ToBytes(message);
             else if (MODE_HEX.equals(mode))
                 input = Converter.hexToBytes(message);
-            byte[] output = cryptoEngine.decrypt(input, pass, hash);
+            if (initVec != null)
+                iv = Converter.hexToBytes(initVec);
+            byte[] output = cryptoEngine.decrypt(input, iv, pass, hash);
             return Converter.bytesToText(output);
 
         } catch(Exception err) {

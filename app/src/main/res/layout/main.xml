@@ -82,6 +82,19 @@
     </LinearLayout>
 
     <EditText
+        android:id="@+id/iv_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_item_margin"
+        android:background="@android:color/transparent"
+        android:digits="0123456789ABCDEF: "
+        android:hint="@string/hint_enter_iv"
+        android:importantForAutofill="no"
+        android:inputType="textCapCharacters|textNoSuggestions"
+        android:singleLine="true"
+        android:visibility="gone" />
+
+    <EditText
         android:id="@+id/text_output"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -117,6 +130,25 @@
             android:layout_marginLeft="@dimen/margin_switch"
             android:layout_weight="1"
             android:text="@string/switch_hex_view"
+            android:textColor="@color/switch_text_color" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/iv_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:singleLine="true"
+            android:thumbTextPadding="20dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_switch"
+            android:layout_marginLeft="@dimen/margin_switch"
+            android:layout_weight="1"
+            android:text="@string/switch_en_iv"
             android:textColor="@color/switch_text_color" />
     </LinearLayout>
 

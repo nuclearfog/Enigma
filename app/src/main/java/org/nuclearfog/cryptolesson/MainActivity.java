@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private static final String[] CRYPTO = {AES_256, IDEA, CAMELLIA, SERPENT, BLOWFISH, TWOFISH, KUZNYECHIK, DES};
     private static final String[] HASH = {SHA_512, SHA_256, WHIRLPOOL, TIGER, SHA_1, MD5};
 
-    private EditText input, output, pass;
+    private EditText input, output, pass, iVector;
     private Spinner cryptSelector, hashSelector;
-    private CompoundButton hexSwitch;
+    private CompoundButton hexSwitch, enable_iv;
     private Dialog licenseDialog;
 
     private String[] cryptOutput = {"", ""};
@@ -51,9 +51,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         input = findViewById(R.id.text_input);
         output = findViewById(R.id.text_output);
         pass = findViewById(R.id.text_pass);
+        iVector = findViewById(R.id.iv_input);
         cryptSelector = findViewById(R.id.crypt_algo);
         hashSelector = findViewById(R.id.hash_algo);
         hexSwitch = findViewById(R.id.hex_switch);
+        enable_iv = findViewById(R.id.iv_switch);
         licenseDialog = new LicenseDialog(this);
         cryptSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, CRYPTO));
         hashSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, HASH));
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
         hexSwitch.setOnCheckedChangeListener(this);
+        enable_iv.setOnCheckedChangeListener(this);
     }
 
 
@@ -87,36 +90,42 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        String initV = null;
         String cryptoAlgorithm = CRYPTO[cryptSelector.getSelectedItemPosition()];
         String hashAlgorithm = HASH[hashSelector.getSelectedItemPosition()];
-
-        if (v.getId() == R.id.text_encrypt) {
-            Encrypter task = new Encrypter(this);
-            String text = input.getText().toString();
-            String secret = pass.getText().toString();
-            task.execute(text, secret, cryptoAlgorithm, hashAlgorithm);
+        String secret = pass.getText().toString();
+        if (enable_iv.isChecked()) {
+            initV = iVector.getText().toString();
         }
-        else if (v.getId() == R.id.text_decrypt) {
-            Decrypter task = new Decrypter(this);
+        if (v.getId() == R.id.text_encrypt) {
+            String text = input.getText().toString();
+            Encrypter task = new Encrypter(this);
+            task.execute(text, secret, initV, cryptoAlgorithm, hashAlgorithm);
+        } else if (v.getId() == R.id.text_decrypt) {
+            String mode = hexSwitch.isChecked() ? MODE_HEX : MODE_B64;
             String text = output.getText().toString();
-            String secret = pass.getText().toString();
-            if (hexSwitch.isChecked()) {
-                task.execute(text, secret, cryptoAlgorithm, hashAlgorithm, MODE_HEX);
-            } else {
-                task.execute(text, secret, cryptoAlgorithm, hashAlgorithm, MODE_B64);
-            }
+            Decrypter task = new Decrypter(this);
+            task.execute(text, secret, initV, cryptoAlgorithm, hashAlgorithm, mode);
         }
     }
 
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked){
-            output.setText(cryptOutput[1]);
-            output.setVerticalScrollBarEnabled(true);
-        } else {
-            output.setText(cryptOutput[0]);
-            output.setVerticalScrollBarEnabled(false);
+        if (buttonView.getId() == R.id.hex_switch) {
+            if (isChecked) {
+                output.setText(cryptOutput[1]);
+                output.setVerticalScrollBarEnabled(true);
+            } else {
+                output.setText(cryptOutput[0]);
+                output.setVerticalScrollBarEnabled(false);
+            }
+        } else if (buttonView.getId() == R.id.iv_switch) {
+            if (isChecked) {
+                iVector.setVisibility(View.VISIBLE);
+            } else {
+                iVector.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -39,8 +39,9 @@ public class Encrypter extends AsyncTask<String, Void, String[]> {
         try {
             String message = param[0];
             String password = param[1];
-            String encryption = param[2];
-            String hashAlgorithm = param[3];
+            String initVec = param[2];
+            String encryption = param[3];
+            String hashAlgorithm = param[4];
 
             SymmetricCryptography cryptoEngine;
 
@@ -80,8 +81,11 @@ public class Encrypter extends AsyncTask<String, Void, String[]> {
                     cryptoEngine = new Twofish();
                     break;
             }
+            byte[] iv = null;
             byte[] input = Converter.textToBytes(message);
-            byte[] output = cryptoEngine.encrypt(input, password, hashAlgorithm);
+            if (initVec != null)
+                iv = Converter.hexToBytes(initVec);
+            byte[] output = cryptoEngine.encrypt(input, iv, password, hashAlgorithm);
             String base64 = Converter.bytesToBase64(output);
             String hex = Converter.bytesToHex(output);
             return new String[]{base64, hex};

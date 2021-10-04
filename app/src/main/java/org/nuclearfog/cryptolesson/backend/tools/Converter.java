@@ -78,12 +78,21 @@ public class Converter {
      * @return byte array
      */
     public static byte[] hexToBytes(String text) {
+        if (text.isEmpty())
+            return new byte[0];
         // split hex values from text
         String[] hexStr = text.split("[\\s:-]\n?");
         byte[] output = new byte[hexStr.length];
         for (int i = 0 ; i < hexStr.length ; i++) {
-            output[i] = (byte) (Character.digit(hexStr[i].charAt(1), 16));
-            output[i] |= ((byte) (Character.digit(hexStr[i].charAt(0), 16)) << 4);
+            String hexDigit = hexStr[i];
+            if (hexDigit.length() == 1) {
+                output[i] = (byte) (Character.digit(hexDigit.charAt(0), 16));
+            } else if (hexDigit.length() == 2){
+                output[i] = (byte) (Character.digit(hexDigit.charAt(1), 16));
+                output[i] |= ((byte) (Character.digit(hexDigit.charAt(0), 16)) << 4);
+            } else {
+                throw new NumberFormatException("Wrong formatted numbers!");
+            }
         }
         return output;
     }

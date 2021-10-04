@@ -20,9 +20,9 @@ public class Camellia extends SymmetricCryptography {
      * {@inheritDoc}
      */
     @Override
-    public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
+    public byte[] encrypt(byte[] input, byte[] iv, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZES, true);
+            return encryptDecrypt(input, iv, password, hash, new CamelliaEngine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -32,9 +32,9 @@ public class Camellia extends SymmetricCryptography {
      * {@inheritDoc}
      */
     @Override
-    public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
+    public byte[] decrypt(byte[] input, byte[] iv, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZES, false);
+            return encryptDecrypt(input, iv, password, hash, new CamelliaEngine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }
