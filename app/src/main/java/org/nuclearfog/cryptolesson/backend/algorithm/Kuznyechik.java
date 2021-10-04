@@ -12,9 +12,8 @@ import java.io.IOException;
 public class Kuznyechik extends SymmetricCryptography {
 
     /**
-     * key size for Kuznyechik
      */
-    private static final int KEYSIZE = 32;
+    private static final int[] KEYSIZES = {32};
 
     /**
      * {@inheritDoc}
@@ -22,7 +21,7 @@ public class Kuznyechik extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new GOST28147Engine(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new GOST28147Engine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -34,7 +33,7 @@ public class Kuznyechik extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new GOST28147Engine(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new GOST28147Engine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

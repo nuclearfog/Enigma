@@ -2,7 +2,7 @@ package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.BufferedBlockCipher;
-import org.bouncycastle.crypto.ExtendedDigest;
+import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
@@ -47,10 +47,10 @@ public abstract class SymmetricCryptography {
     /**
      * encrypt byte array with AES-CBC
      *
-     * @param input input byte array (clear, must be aligned)
-     * @param password password string
-     * @param hash hash algorithm name as string
-     * @return byte array (aligned)
+     * @param input     input byte array (clear, must be aligned)
+     * @param password  password string
+     * @param hash      hash algorithm name as string
+     * @return encrypted byte array
      * @throws IOException if encryption fails
      */
     public abstract byte[] encrypt(byte[] input, String password, String hash) throws IOException;
@@ -58,10 +58,10 @@ public abstract class SymmetricCryptography {
     /**
      * decrypt byte array with AES-CBC
      *
-     * @param input input byte array (encrypted, must be aligned)
-     * @param password password string
-     * @param hash hash algorithm name as string
-     * @return byte array (clear, aligned)
+     * @param input     input byte array (encrypted, must be aligned)
+     * @param password  password string
+     * @param hash      hash algorithm name as string
+     * @return decrypted byte array
      * @throws IOException if encryption fails
      */
     public abstract byte[] decrypt(byte[] input, String password, String hash) throws IOException;
@@ -69,42 +69,53 @@ public abstract class SymmetricCryptography {
     /**
      * create encryption key from password. A hash code of the password will be used.
      *
-     * @param password password string
-     * @param hash hash algorithm name
+     * @param password  password string
+     * @param hash      hash algorithm name
+     * @param keysizes  key sizes of the encryption algorithm in descending order
      * @return secret key to encrypt or decrypt
      */
-    private byte[] buildKey(String password, String hash, int keysize) {
-        ExtendedDigest digest;
+    private byte[] buildKey(String password, String hash, int... keysizes) {
+        Digest digest;
         switch (hash) {
-            default:
-            case SHA_256:
-                digest = new SHA256Digest();
-                break;
-
-            case SHA_512:
-                digest = new SHA512Digest();
-                break;
-
-            case SHA_1:
-                digest = new SHA1Digest();
+            case TIGER:
+                digest = new TigerDigest();
                 break;
 
             case WHIRLPOOL:
                 digest = new WhirlpoolDigest();
                 break;
 
-            case TIGER:
-                digest = new TigerDigest();
+            case SHA_512:
+                digest = new SHA512Digest();
+                break;
+
+            case SHA_256:
+                digest = new SHA256Digest();
+                break;
+
+            case SHA_1:
+                digest = new SHA1Digest();
                 break;
 
             case MD5:
                 digest = new MD5Digest();
                 break;
+
+            default:
+                throw new IllegalArgumentException("hash algorithm not defined!");
         }
+        // calculate hash
         digest.update(password.getBytes(), 0, password.length());
         byte[] result = new byte[digest.getDigestSize()];
         digest.doFinal(result, 0);
-        return Arrays.copyOf(result, keysize);
+        // use biggest possible keysize and trim to key size
+        for (int keysize : keysizes) {
+            if (result.length >= keysize) {
+                return Arrays.copyOf(result, keysize);
+            }
+        }
+        // use fallback keysize and add zero padding
+        return Arrays.copyOf(result, keysizes[keysizes.length - 1]);
     }
 
     /**
@@ -113,15 +124,15 @@ public abstract class SymmetricCryptography {
      * @param input     input byte array
      * @param password  password to encrypt/decrypt
      * @param hash      hash algorithm name
-     * @param keySize   length of the encryption/decryption key
+     * @param keySizes  key sizes of the encryption algorithm in descending order
      * @param encrypt   true to encrypt, false to decrypt
-     * @return encrypted/ decrypted byte array
+     * @return encrypted/decrypted byte array
      */
-    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, int keySize, boolean encrypt) throws InvalidCipherTextException {
+    protected byte[] encryptDecrypt(byte[] input, String password, String hash, BlockCipher cipher, int[] keySizes, boolean encrypt) throws InvalidCipherTextException {
         CBCBlockCipher cbcCipher = new CBCBlockCipher(cipher);
         // create key and initial vector from password with defined hash algorithm
-        byte[] key = buildKey(password, hash, keySize);
-        byte[] iv = Arrays.copyOf(key, cbcCipher.getBlockSize());
+        byte[] key = buildKey(password, hash, keySizes);
+        byte[] iv = buildKey(password, hash, cbcCipher.getBlockSize());
         // init cipher
         KeyParameter keyParam = new KeyParameter(key);
         BlockCipherPadding padding = new PKCS7Padding();

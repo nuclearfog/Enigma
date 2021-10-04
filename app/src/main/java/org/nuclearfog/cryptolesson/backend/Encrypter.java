@@ -46,6 +46,8 @@ public class Encrypter extends AsyncTask<String, Void, String[]> {
 
             switch(encryption) {
                 default:
+                    return new String[] {"", ""};
+
                 case AES_256:
                     cryptoEngine = new AES();
                     break;

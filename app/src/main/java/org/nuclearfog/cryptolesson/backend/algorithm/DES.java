@@ -1,7 +1,6 @@
 package org.nuclearfog.cryptolesson.backend.algorithm;
 
 import org.bouncycastle.crypto.engines.DESEngine;
-import org.bouncycastle.crypto.modes.CBCBlockCipher;
 
 import java.io.IOException;
 
@@ -14,9 +13,8 @@ import java.io.IOException;
 public class DES extends SymmetricCryptography {
 
     /**
-     * keysize of DES
      */
-    private static final int KEYSIZE = 8;
+    private static final int[] KEYSIZES = {8};
 
     /**
      * {@inheritDoc}
@@ -24,7 +22,7 @@ public class DES extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new DESEngine(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new DESEngine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -36,7 +34,7 @@ public class DES extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new DESEngine(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new DESEngine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

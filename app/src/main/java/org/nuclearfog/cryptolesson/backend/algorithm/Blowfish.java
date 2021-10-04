@@ -12,9 +12,8 @@ import java.io.IOException;
 public class Blowfish extends SymmetricCryptography {
 
     /**
-     * default key size used by Blowfish
      */
-    private static final int KEYSIZE = 32;
+    private static final int[] KEYSIZES = {56, 32, 16};
 
     /**
      * {@inheritDoc}
@@ -22,7 +21,7 @@ public class Blowfish extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new BlowfishEngine(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new BlowfishEngine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -34,7 +33,7 @@ public class Blowfish extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new BlowfishEngine(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new BlowfishEngine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

@@ -57,6 +57,8 @@ public class Decrypter extends AsyncTask<String, Void, String> {
 
             switch(encryption) {
                 default:
+                    return "";
+
                 case AES_256:
                     cryptoEngine = new AES();
                     break;

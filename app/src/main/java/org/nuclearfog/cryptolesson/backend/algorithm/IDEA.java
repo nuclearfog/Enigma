@@ -13,15 +13,14 @@ import java.io.IOException;
 public class IDEA extends SymmetricCryptography {
 
     /**
-     * key size for IDEA encryption
      */
-    private static final int KEYSIZE = 16;
+    private static final int[] KEYSIZES = {16};
 
 
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new IDEAEngine(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new IDEAEngine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -31,7 +30,7 @@ public class IDEA extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new IDEAEngine(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new IDEAEngine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

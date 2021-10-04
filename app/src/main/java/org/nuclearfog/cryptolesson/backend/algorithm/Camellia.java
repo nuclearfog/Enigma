@@ -13,9 +13,8 @@ import java.io.IOException;
 public class Camellia extends SymmetricCryptography {
 
     /**
-     * key size for Camellia
      */
-    private static final int KEYSIZE = 32;
+    private static final int[] KEYSIZES = {32, 24, 16};
 
     /**
      * {@inheritDoc}
@@ -23,7 +22,7 @@ public class Camellia extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -35,7 +34,7 @@ public class Camellia extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new CamelliaEngine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }

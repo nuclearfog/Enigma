@@ -12,9 +12,8 @@ import java.io.IOException;
 public class Serpent extends SymmetricCryptography {
 
     /**
-     * Key size used for Serpent
      */
-    private static final int KEYSIZE = 32;
+    private static final int[] KEYSIZES = {32, 24, 16};
 
     /**
      * {@inheritDoc}
@@ -22,7 +21,7 @@ public class Serpent extends SymmetricCryptography {
     @Override
     public byte[] encrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new SerpentEngine(), KEYSIZE, true);
+            return encryptDecrypt(input, password, hash, new SerpentEngine(), KEYSIZES, true);
         } catch (Exception e) {
             throw new IOException(e);
         }
@@ -34,7 +33,7 @@ public class Serpent extends SymmetricCryptography {
     @Override
     public byte[] decrypt(byte[] input, String password, String hash) throws IOException {
         try {
-            return encryptDecrypt(input, password, hash, new SerpentEngine(), KEYSIZE, false);
+            return encryptDecrypt(input, password, hash, new SerpentEngine(), KEYSIZES, false);
         } catch (Exception e) {
             throw new IOException(e);
         }
