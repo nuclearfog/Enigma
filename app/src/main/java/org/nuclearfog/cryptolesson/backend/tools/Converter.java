@@ -101,12 +101,13 @@ public class Converter {
      * convert byte array to hex string
      *
      * @param input byte array
+     * @param base  how much values in a row
      * @return string with hex values separated by  whitespace
      */
-    public static String bytesToHex(byte[] input) {
+    public static String bytesToHex(byte[] input, int base) {
         StringBuilder result = new StringBuilder();
         for (int i = 0 ; i < input.length ; i++) {
-            if (i % 8 == 0 && i > 0) {
+            if (i % base == 0 && i > 0) {
                 result.append('\n');
             }
             result.append(String.format("%02X ", input[i]));
