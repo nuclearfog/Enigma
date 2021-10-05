@@ -20,4 +20,11 @@ public interface Callback {
      * @param message clear text message
      */
     void onDecrypted(String message);
+
+    /**
+     * called to set initial vector
+     *
+     * @param vector initial vector
+     */
+    void onRandomCreated(String vector);
 }

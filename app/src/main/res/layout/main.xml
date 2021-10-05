@@ -81,18 +81,35 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/iv_input"
+    <LinearLayout
+        android:id="@+id/iv_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/view_item_margin"
-        android:background="@android:color/transparent"
-        android:digits="0123456789ABCDEF: "
-        android:hint="@string/hint_enter_iv"
-        android:importantForAutofill="no"
-        android:inputType="textCapCharacters|textNoSuggestions"
-        android:singleLine="true"
-        android:visibility="gone" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/iv_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@android:color/transparent"
+            android:digits="0123456789ABCDEF: "
+            android:hint="@string/hint_enter_iv"
+            android:importantForAutofill="no"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:singleLine="true"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/iv_generate"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/hint_ramdom"
+            android:src="@drawable/random" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/text_output"
@@ -150,6 +167,7 @@
             android:layout_weight="1"
             android:text="@string/switch_en_iv"
             android:textColor="@color/switch_text_color" />
+
     </LinearLayout>
 
 </LinearLayout>

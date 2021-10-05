@@ -5,6 +5,7 @@
     <string name="hint_password">Password</string>
     <string name="hint_input">Plain text</string>
     <string name="hint_output">encrypted text</string>
+    <string name="hint_ramdom">generate random IV</string>
     <string name="switch_hex_view">HEX mode</string>
     <string name="switch_en_iv">enable IV</string>
     <string name="hint_enter_iv">enter IV e.g. AA:BB:CC</string>

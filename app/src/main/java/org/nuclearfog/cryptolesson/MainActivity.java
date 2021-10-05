@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.nuclearfog.cryptolesson.backend.Callback;
 import org.nuclearfog.cryptolesson.backend.Decrypter;
 import org.nuclearfog.cryptolesson.backend.Encrypter;
+import org.nuclearfog.cryptolesson.backend.Randomizer;
 
 import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography.*;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Spinner cryptSelector, hashSelector;
     private CompoundButton hexSwitch, enable_iv;
     private Dialog licenseDialog;
+    private View iv_container;
 
     private String[] cryptOutput = {"", ""};
 
@@ -56,14 +58,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         hashSelector = findViewById(R.id.hash_algo);
         hexSwitch = findViewById(R.id.hex_switch);
         enable_iv = findViewById(R.id.iv_switch);
+        iv_container = findViewById(R.id.iv_view);
+        View encrypt = findViewById(R.id.text_encrypt);
+        View decrypt = findViewById(R.id.text_decrypt);
+        View randomIV = findViewById(R.id.iv_generate);
+
         licenseDialog = new LicenseDialog(this);
         cryptSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, CRYPTO));
         hashSelector.setAdapter(new ArrayAdapter<>(this, R.layout.dropdown_item, HASH));
-        View encrypt = findViewById(R.id.text_encrypt);
-        View decrypt = findViewById(R.id.text_decrypt);
+        iv_container.setVisibility(enable_iv.isChecked() ? View.VISIBLE : View.GONE);
 
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
+        randomIV.setOnClickListener(this);
         hexSwitch.setOnCheckedChangeListener(this);
         enable_iv.setOnCheckedChangeListener(this);
     }
@@ -91,21 +98,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onClick(View v) {
         String initV = null;
-        String cryptoAlgorithm = CRYPTO[cryptSelector.getSelectedItemPosition()];
-        String hashAlgorithm = HASH[hashSelector.getSelectedItemPosition()];
-        String secret = pass.getText().toString();
-        if (enable_iv.isChecked()) {
-            initV = iVector.getText().toString();
-        }
+        String crypto = CRYPTO[cryptSelector.getSelectedItemPosition()];
+        // encrypt text
         if (v.getId() == R.id.text_encrypt) {
+            String hash = HASH[hashSelector.getSelectedItemPosition()];
+            String secret = pass.getText().toString();
             String text = input.getText().toString();
+            if (enable_iv.isChecked())
+                initV = iVector.getText().toString();
             Encrypter task = new Encrypter(this);
-            task.execute(text, secret, initV, cryptoAlgorithm, hashAlgorithm);
-        } else if (v.getId() == R.id.text_decrypt) {
+            task.execute(text, secret, initV, crypto, hash);
+        }
+        // decrypt text
+        else if (v.getId() == R.id.text_decrypt) {
+            String hash = HASH[hashSelector.getSelectedItemPosition()];
+            String secret = pass.getText().toString();
             String mode = hexSwitch.isChecked() ? MODE_HEX : MODE_B64;
             String text = output.getText().toString();
+            if (enable_iv.isChecked())
+                initV = iVector.getText().toString();
             Decrypter task = new Decrypter(this);
-            task.execute(text, secret, initV, cryptoAlgorithm, hashAlgorithm, mode);
+            task.execute(text, secret, initV, crypto, hash, mode);
+        } else if (v.getId() == R.id.iv_generate) {
+            Randomizer randomizer = new Randomizer(this);
+            randomizer.execute(crypto);
         }
     }
 
@@ -122,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         } else if (buttonView.getId() == R.id.iv_switch) {
             if (isChecked) {
-                iVector.setVisibility(View.VISIBLE);
+                iv_container.setVisibility(View.VISIBLE);
             } else {
-                iVector.setVisibility(View.GONE);
+                iv_container.setVisibility(View.GONE);
             }
         }
     }
@@ -144,5 +160,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onDecrypted(String message) {
         input.setText(message);
+    }
+
+
+    @Override
+    public void onRandomCreated(String vector) {
+        iVector.setText(vector);
     }
 }
