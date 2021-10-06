@@ -100,17 +100,18 @@ public class Converter {
     /**
      * convert byte array to hex string
      *
-     * @param input byte array
-     * @param base  how much values in a row
+     * @param input     byte array
+     * @param base      how much values in a row
+     * @param separator character used separate values
      * @return string with hex values separated by  whitespace
      */
-    public static String bytesToHex(byte[] input, int base) {
+    public static String bytesToHex(byte[] input, int base, char separator) {
         StringBuilder result = new StringBuilder();
         for (int i = 0 ; i < input.length ; i++) {
             if (i % base == 0 && i > 0) {
                 result.append('\n');
             }
-            result.append(String.format("%02X ", input[i]));
+            result.append(String.format("%02X%c", input[i], separator));
         }
         return result.deleteCharAt(result.length() - 1).toString();
     }

@@ -76,7 +76,7 @@
             android:drawablePadding="@dimen/password_icon_padding"
             android:hint="@string/hint_password"
             android:importantForAutofill="no"
-            android:inputType="textNoSuggestions"
+            android:inputType="textPassword|textNoSuggestions"
             android:singleLine="true" />
 
     </LinearLayout>

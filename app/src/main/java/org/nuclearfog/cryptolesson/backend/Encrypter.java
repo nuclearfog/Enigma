@@ -87,7 +87,7 @@ public class Encrypter extends AsyncTask<String, Void, String[]> {
                 iv = Converter.hexToBytes(initVec);
             byte[] output = cryptoEngine.encrypt(input, iv, password, hashAlgorithm);
             String base64 = Converter.bytesToBase64(output);
-            String hex = Converter.bytesToHex(output, 8);
+            String hex = Converter.bytesToHex(output, 8, ' ');
             return new String[]{base64, hex};
 
         } catch (Exception err) {

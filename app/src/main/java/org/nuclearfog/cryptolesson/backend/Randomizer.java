@@ -64,7 +64,7 @@ public class Randomizer extends AsyncTask<String, Void, String> {
 
             byte[] random = new byte[blocksize];
             randomGen.nextBytes(random);
-            return Converter.bytesToHex(random, 16);
+            return Converter.bytesToHex(random, 16, ':');
         } catch (Exception e) {
             e.printStackTrace();
         }

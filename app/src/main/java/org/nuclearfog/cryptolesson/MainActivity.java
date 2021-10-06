@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 iv_container.setVisibility(View.VISIBLE);
             } else {
                 iv_container.setVisibility(View.GONE);
+                iVector.setText("");
             }
         }
     }
