@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Enigma</string>
+    <string name="app_name" translatable="false">Enigma</string>
     <string name="button_encrypt">encrypt!</string>
     <string name="button_decrypt">decrypt!</string>
     <string name="hint_password">Password</string>
     <string name="hint_input">Plain text</string>
     <string name="hint_output">encrypted text</string>
-    <string name="hint_ramdom">generate random IV</string>
+    <string name="hint_ramdom">generate random initial vector</string>
     <string name="switch_hex_view">HEX mode</string>
     <string name="switch_en_iv">enable IV</string>
-    <string name="hint_enter_iv">enter IV e.g. AA:BB:CC</string>
+    <string name="hint_enter_iv">enter initial vector</string>
     <string name="licenses">Licenses</string>
 </resources>

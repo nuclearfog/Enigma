@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_decrypt">entschlüsseln</string>
+    <string name="button_encrypt">verschlüsseln</string>
+    <string name="hint_password">Passwort</string>
+    <string name="hint_input">Klartext</string>
+    <string name="hint_output">Geheimtext</string>
+    <string name="hint_ramdom">zufälliger Initialvektor</string>
+    <string name="switch_hex_view">HEX-Modus</string>
+    <string name="switch_en_iv">IV aktivieren</string>
+    <string name="hint_enter_iv">Initialvektor eingeben</string>
+    <string name="licenses">Lizenzen</string>
+</resources>
