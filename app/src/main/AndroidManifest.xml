@@ -8,12 +8,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CryptoLesson" >
+        android:theme="@style/CustomAppTheme">
 
         <activity
             android:name="MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CryptoLesson"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity">
 

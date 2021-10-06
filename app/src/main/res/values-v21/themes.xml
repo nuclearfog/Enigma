@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.CryptoLesson" parent="Theme.AppCompat">
+    <style name="CustomAppTheme" parent="Theme.AppCompat">
         <item name="android:background">@color/grey</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColorPrimary">@color/text_color</item>
