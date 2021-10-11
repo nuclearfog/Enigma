@@ -1,8 +1,5 @@
 package org.nuclearfog.cryptolesson;
 
-import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_B64;
-import static org.nuclearfog.cryptolesson.backend.Decrypter.MODE_HEX;
-
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +22,7 @@ import org.nuclearfog.cryptolesson.backend.Encrypter;
 import org.nuclearfog.cryptolesson.backend.Randomizer;
 
 import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography.*;
+import static org.nuclearfog.cryptolesson.backend.Decrypter.*;
 
 /**
  * Main activity of the app
@@ -33,8 +31,19 @@ import static org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptograph
  */
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener, Callback {
 
-    private static final String[] CRYPTO = {AES_256, IDEA, CAMELLIA, SERPENT, BLOWFISH, TWOFISH, KUZNYECHIK, DES};
-    private static final String[] HASH = {SHA_512, SHA_256, WHIRLPOOL, TIGER, SHA_1, MD5};
+    private static final String[] CRYPTO = {
+            AES_256, IDEA,
+            CAMELLIA, SHACAL_2,
+            SERPENT, BLOWFISH,
+            TWOFISH, KUZNYECHIK,
+            SEED, T_DES, DES
+    };
+
+    private static final String[] HASH = {
+            SHA_512, SHA_256,
+            WHIRLPOOL, TIGER,
+            STREEBOG, SHA_1, MD5
+    };
 
     private EditText input, output, pass, iVector;
     private Spinner cryptSelector, hashSelector;
@@ -79,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
         getMenuInflater().inflate(R.menu.main, m);
-
         return super.onCreateOptionsMenu(m);
     }
 
@@ -90,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             if (!licenseDialog.isShowing()) {
                 licenseDialog.show();
             }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

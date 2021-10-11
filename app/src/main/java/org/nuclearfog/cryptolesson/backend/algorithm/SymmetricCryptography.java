@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import org.bouncycastle.crypto.BlockCipher;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.bouncycastle.crypto.digests.GOST3411_2012_512Digest;
 import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
@@ -33,8 +34,11 @@ public abstract class SymmetricCryptography {
     public static final String SERPENT = "Serpent";
     public static final String CAMELLIA = "Camellia";
     public static final String KUZNYECHIK = "Kuznyechik";
+    public static final String T_DES = "Triple DES";
+    public static final String SHACAL_2 = "SHACAL-2";
     public static final String DES = "DES";
     public static final String IDEA = "IDEA";
+    public static final String SEED = "SEED";
     public static final String TWOFISH = "Twofish";
 
     public static final String MD5 = "MD5";
@@ -43,6 +47,7 @@ public abstract class SymmetricCryptography {
     public static final String SHA_512 = "SHA-512";
     public static final String WHIRLPOOL = "Whirlpool";
     public static final String TIGER = "Tiger";
+    public static final String STREEBOG = "Streebog";
 
     /**
      * encrypt byte array with AES-CBC
@@ -85,6 +90,10 @@ public abstract class SymmetricCryptography {
 
             case WHIRLPOOL:
                 digest = new WhirlpoolDigest();
+                break;
+
+            case STREEBOG:
+                digest = new GOST3411_2012_512Digest();
                 break;
 
             case SHA_512:

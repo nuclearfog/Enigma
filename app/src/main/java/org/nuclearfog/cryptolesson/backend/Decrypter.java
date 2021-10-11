@@ -9,8 +9,11 @@ import org.nuclearfog.cryptolesson.backend.algorithm.Camellia;
 import org.nuclearfog.cryptolesson.backend.algorithm.DES;
 import org.nuclearfog.cryptolesson.backend.algorithm.IDEA;
 import org.nuclearfog.cryptolesson.backend.algorithm.Kuznyechik;
+import org.nuclearfog.cryptolesson.backend.algorithm.Seed;
 import org.nuclearfog.cryptolesson.backend.algorithm.Serpent;
+import org.nuclearfog.cryptolesson.backend.algorithm.Shacal2;
 import org.nuclearfog.cryptolesson.backend.algorithm.SymmetricCryptography;
+import org.nuclearfog.cryptolesson.backend.algorithm.TripleDES;
 import org.nuclearfog.cryptolesson.backend.algorithm.Twofish;
 import org.nuclearfog.cryptolesson.backend.tools.Converter;
 
@@ -86,6 +89,18 @@ public class Decrypter extends AsyncTask<String, Void, String> {
 
                 case DES:
                     cryptoEngine = new DES();
+                    break;
+
+                case T_DES:
+                    cryptoEngine = new TripleDES();
+                    break;
+
+                case SHACAL_2:
+                    cryptoEngine = new Shacal2();
+                    break;
+
+                case SEED:
+                    cryptoEngine = new Seed();
                     break;
 
                 case TWOFISH:
