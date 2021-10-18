@@ -9,6 +9,7 @@ import org.nuclearfog.cryptolesson.backend.algorithm.Camellia;
 import org.nuclearfog.cryptolesson.backend.algorithm.DES;
 import org.nuclearfog.cryptolesson.backend.algorithm.IDEA;
 import org.nuclearfog.cryptolesson.backend.algorithm.Kuznyechik;
+import org.nuclearfog.cryptolesson.backend.algorithm.Noekeon;
 import org.nuclearfog.cryptolesson.backend.algorithm.Seed;
 import org.nuclearfog.cryptolesson.backend.algorithm.Serpent;
 import org.nuclearfog.cryptolesson.backend.algorithm.Shacal2;
@@ -105,6 +106,10 @@ public class Decrypter extends AsyncTask<String, Void, String> {
 
                 case TWOFISH:
                     cryptoEngine = new Twofish();
+                    break;
+
+                case NOEKEON:
+                    cryptoEngine = new Noekeon();
                     break;
             }
             byte[] iv = null;

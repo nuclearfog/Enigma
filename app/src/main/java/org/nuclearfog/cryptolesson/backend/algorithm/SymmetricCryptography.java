@@ -40,6 +40,7 @@ public abstract class SymmetricCryptography {
     public static final String IDEA = "IDEA";
     public static final String SEED = "SEED";
     public static final String TWOFISH = "Twofish";
+    public static final String NOEKEON = "NOEKEON";
 
     public static final String MD5 = "MD5";
     public static final String SHA_1 = "SHA-1";

@@ -43,6 +43,7 @@ public class Randomizer extends AsyncTask<String, Void, String> {
                 case CAMELLIA:
                 case SERPENT:
                 case TWOFISH:
+                case NOEKEON:
                 case SEED:
                     blocksize = 16;
                     break;

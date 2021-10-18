@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             CAMELLIA, SHACAL_2,
             SERPENT, BLOWFISH,
             TWOFISH, KUZNYECHIK,
-            SEED, T_DES, DES
+            NOEKEON, SEED, T_DES, DES
     };
 
     private static final String[] HASH = {
