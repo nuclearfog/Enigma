@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "org.nuclearfog.cryptolesson"
-        minSdk 16
+        minSdk 14
         targetSdk 30
         versionCode 3
         versionName "1.1.1"
