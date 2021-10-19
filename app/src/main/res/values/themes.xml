@@ -15,7 +15,6 @@
 
     <style name="TitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_color</item>
-        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="LicenseDialogStyle" parent="Theme.AppCompat.Dialog.Alert">

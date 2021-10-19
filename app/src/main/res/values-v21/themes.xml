@@ -14,4 +14,10 @@
         <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="actionMenuTextColor">@color/text_color</item>
     </style>
+
+    <style name="TitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
 </resources>
