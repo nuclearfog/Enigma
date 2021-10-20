@@ -5,4 +5,5 @@
     <color name="dropdown_text_color">#ffccff44</color>
     <color name="switch_text_color">#ff11ee11</color>
     <color name="text_hint">#ff4f4f4f</color>
+    <color name="color_accent">#fff8f8f8</color>
 </resources>

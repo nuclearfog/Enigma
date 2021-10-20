@@ -9,8 +9,8 @@ android {
         applicationId "org.nuclearfog.cryptolesson"
         minSdk 14
         targetSdk 30
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.1.2"
         resConfigs 'en', 'de-rDE'
     }
 

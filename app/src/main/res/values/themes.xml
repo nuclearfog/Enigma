@@ -1,12 +1,15 @@
 <resources>
     <style name="CustomAppTheme" parent="Theme.AppCompat">
-        <item name="android:background">@color/grey</item>
+        <!-- font styles -->
         <item name="android:textAllCaps">false</item>
+        <!-- color styles -->
+        <item name="android:background">@color/grey</item>
         <item name="android:textColorPrimary">@color/text_color</item>
-        <item name="android:textColorSecondary">@color/text_color</item>
         <item name="android:textColorHint">@color/text_hint</item>
-        <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="actionMenuTextColor">@color/text_color</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <!-- other -->
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
     <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
@@ -22,6 +25,12 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/license_text_size_small</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="SpinnerItemStyle">
+        <item name="android:padding">@dimen/dropdown_item_padding</item>
+        <item name="android:textSize">@dimen/dropdown_text_size</item>
+        <item name="android:textColor">@color/dropdown_text_color</item>
     </style>
 
 </resources>

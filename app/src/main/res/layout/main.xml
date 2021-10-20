@@ -135,7 +135,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:fontFamily="monospace"
             android:singleLine="true"
             android:thumbTextPadding="20dp" />
 
@@ -154,7 +153,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:fontFamily="monospace"
             android:singleLine="true"
             android:thumbTextPadding="20dp" />
 
