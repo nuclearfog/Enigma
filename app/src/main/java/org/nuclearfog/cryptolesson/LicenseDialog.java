@@ -2,21 +2,21 @@ package org.nuclearfog.cryptolesson;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.webkit.WebView;
 
-import com.larswerkman.licenseview.LicenseView;
-
-
+/**
+ * dialog class to show app license
+ *
+ * @author nuclearfog
+ */
 public class LicenseDialog extends Dialog {
 
 
     public LicenseDialog(Context context) {
         super(context, R.style.LicenseDialogStyle);
-        setContentView(R.layout.dialog_license);
-        LicenseView licenseView = findViewById(R.id.license_view);
-        try {
-            licenseView.setLicenses(R.xml.licenses);
-        } catch (Exception err) {
-            dismiss();
-        }
+        WebView webView = new WebView(context);
+        setContentView(webView);
+
+        webView.loadUrl("file:///android_asset/licenses.html");
     }
 }
