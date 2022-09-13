@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion '33.0.0'
 
     defaultConfig {
         applicationId "org.nuclearfog.cryptolesson"
-        minSdk 14
-        targetSdk 32
+        minSdkVersion 14
+        targetSdkVersion 33
         versionCode 6
         versionName "1.1.4"
         resConfigs 'en', 'de-rDE'
@@ -21,17 +21,20 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            multiDexEnabled false
         }
         debug {
             applicationIdSuffix '.debug'
             versionNameSuffix '.d'
+            multiDexEnabled true
         }
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation 'org.bouncycastle:bcpkix-jdk18on:1.71'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.71.1'
 }
